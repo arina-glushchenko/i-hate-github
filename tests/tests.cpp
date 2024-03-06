@@ -1,4 +1,4 @@
-#include "pch.h"
+#include <gtest/gtest.h>
 #include "circular_buffer.h"
 
 TEST(CircularBufferTest, DefaultConstructor) { //1 - default constructor
