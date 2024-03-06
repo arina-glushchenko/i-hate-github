@@ -1,4 +1,3 @@
-#include "pch.h"
 #include "circular_buffer.h"
 #include <stdexcept>
 #include <string_view>
@@ -29,7 +28,7 @@ CircularBuffer::CircularBuffer(const CircularBuffer& cb) { //2
 	end = cb.end;
 }
 
-//Конструирует буфер заданной ёмкости.
+//ГЉГ®Г­Г±ГІГ°ГіГЁГ°ГіГҐГІ ГЎГіГґГҐГ° Г§Г Г¤Г Г­Г­Г®Г© ВёГ¬ГЄГ®Г±ГІГЁ.
 CircularBuffer::CircularBuffer(int capacity) { //3
 	start = bufferSize = 0;
 	buffer = new value_type[capacity];
@@ -38,7 +37,7 @@ CircularBuffer::CircularBuffer(int capacity) { //3
 }
 
 
-//Конструирует буфер заданной ёмкости, целиком заполняет его элементом elem.
+//ГЉГ®Г­Г±ГІГ°ГіГЁГ°ГіГҐГІ ГЎГіГґГҐГ° Г§Г Г¤Г Г­Г­Г®Г© ВёГ¬ГЄГ®Г±ГІГЁ, Г¶ГҐГ«ГЁГЄГ®Г¬ Г§Г ГЇГ®Г«Г­ГїГҐГІ ГҐГЈГ® ГЅГ«ГҐГ¬ГҐГ­ГІГ®Г¬ elem.
 CircularBuffer::CircularBuffer(int capacity, const value_type& elem) {
 	start = 0;
 	bufferSize = capacity;
@@ -51,7 +50,7 @@ CircularBuffer::CircularBuffer(int capacity, const value_type& elem) {
 	end = capacity - 1;
 }
 
-//Доступ по индексу. Не проверяют правильность индекса.
+//Г„Г®Г±ГІГіГЇ ГЇГ® ГЁГ­Г¤ГҐГЄГ±Гі. ГЌГҐ ГЇГ°Г®ГўГҐГ°ГїГѕГІ ГЇГ°Г ГўГЁГ«ГјГ­Г®Г±ГІГј ГЁГ­Г¤ГҐГЄГ±Г .
 value_type& CircularBuffer::operator[](int i) { //4
 	return buffer[(start + i) % bufferCapacity];
 }
@@ -59,7 +58,7 @@ const value_type& CircularBuffer::operator[](int i) const {
 	return buffer[(start + i) % bufferCapacity];
 }
 
-//Доступ по индексу. Методы бросают исключение в случае неверного индекса.
+//Г„Г®Г±ГІГіГЇ ГЇГ® ГЁГ­Г¤ГҐГЄГ±Гі. ГЊГҐГІГ®Г¤Г» ГЎГ°Г®Г±Г ГѕГІ ГЁГ±ГЄГ«ГѕГ·ГҐГ­ГЁГҐ Гў Г±Г«ГіГ·Г ГҐ Г­ГҐГўГҐГ°Г­Г®ГЈГ® ГЁГ­Г¤ГҐГЄГ±Г .
 value_type& CircularBuffer::at(int i) { //5
 	if (i < 0 || i >= bufferSize) {
 		throw std::out_of_range("Invalid index");
@@ -77,12 +76,12 @@ const value_type& CircularBuffer::at(int i) const {
 	}
 }
 
-//Ссылка на первый элемент.
+//Г‘Г±Г»Г«ГЄГ  Г­Г  ГЇГҐГ°ГўГ»Г© ГЅГ«ГҐГ¬ГҐГ­ГІ.
 value_type& CircularBuffer::front() { //6
 	return buffer[start];
 }
 
-//Ссылка на последний элемент.
+//Г‘Г±Г»Г«ГЄГ  Г­Г  ГЇГ®Г±Г«ГҐГ¤Г­ГЁГ© ГЅГ«ГҐГ¬ГҐГ­ГІ.
 value_type& CircularBuffer::back() { //7
 	return buffer[end];
 }
@@ -94,9 +93,9 @@ const value_type& CircularBuffer::back() const {
 	return buffer[end];
 }
 
-//Линеаризация - сдвинуть кольцевой буфер так, что его первый элемент
-//переместится в начало аллоцированной памяти. Возвращает указатель 
-//на первый элемент.
+//Г‹ГЁГ­ГҐГ Г°ГЁГ§Г Г¶ГЁГї - Г±Г¤ГўГЁГ­ГіГІГј ГЄГ®Г«ГјГ¶ГҐГўГ®Г© ГЎГіГґГҐГ° ГІГ ГЄ, Г·ГІГ® ГҐГЈГ® ГЇГҐГ°ГўГ»Г© ГЅГ«ГҐГ¬ГҐГ­ГІ
+//ГЇГҐГ°ГҐГ¬ГҐГ±ГІГЁГІГ±Гї Гў Г­Г Г·Г Г«Г® Г Г«Г«Г®Г¶ГЁГ°Г®ГўГ Г­Г­Г®Г© ГЇГ Г¬ГїГІГЁ. Г‚Г®Г§ГўГ°Г Г№Г ГҐГІ ГіГЄГ Г§Г ГІГҐГ«Гј 
+//Г­Г  ГЇГҐГ°ГўГ»Г© ГЅГ«ГҐГ¬ГҐГ­ГІ.
 
 value_type* CircularBuffer::linearize() { //8
 	value_type* newBuffer = new value_type[bufferSize];
@@ -109,12 +108,12 @@ value_type* CircularBuffer::linearize() { //8
 	return buffer;
 }
 
-//Проверяет, является ли буфер линеаризованным.
+//ГЏГ°Г®ГўГҐГ°ГїГҐГІ, ГїГўГ«ГїГҐГІГ±Гї Г«ГЁ ГЎГіГґГҐГ° Г«ГЁГ­ГҐГ Г°ГЁГ§Г®ГўГ Г­Г­Г»Г¬.
 bool CircularBuffer::is_linearized() const { //9
 	return start == 0 && end == bufferSize - 1;
 }
-//Сдвигает буфер так, что по нулевому индексу окажется элемент 
-//с индексом new_begin.
+//Г‘Г¤ГўГЁГЈГ ГҐГІ ГЎГіГґГҐГ° ГІГ ГЄ, Г·ГІГ® ГЇГ® Г­ГіГ«ГҐГўГ®Г¬Гі ГЁГ­Г¤ГҐГЄГ±Гі Г®ГЄГ Г¦ГҐГІГ±Гї ГЅГ«ГҐГ¬ГҐГ­ГІ 
+//Г± ГЁГ­Г¤ГҐГЄГ±Г®Г¬ new_begin.
 void CircularBuffer::rotate(int new_begin) { //10
 	if (new_begin < 0 || new_begin >= bufferSize) {
 		throw std::out_of_range("Invalid new_begin");
@@ -124,14 +123,14 @@ void CircularBuffer::rotate(int new_begin) { //10
 	end = (end + shift) % bufferCapacity;
 }
 
-//Количество элементов, хранящихся в буфере.
+//ГЉГ®Г«ГЁГ·ГҐГ±ГІГўГ® ГЅГ«ГҐГ¬ГҐГ­ГІГ®Гў, ГµГ°Г Г­ГїГ№ГЁГµГ±Гї Гў ГЎГіГґГҐГ°ГҐ.
 int CircularBuffer::size() const { //11
 	return bufferSize;
 }
 bool CircularBuffer::empty() const { //12
 	return bufferSize == 0;
 }
-//true, если size() == capacity().
+//true, ГҐГ±Г«ГЁ size() == capacity().
 bool CircularBuffer::full() const { //13
 	if (bufferSize == 0 && bufferCapacity == 0) {
 		return false;
@@ -140,11 +139,11 @@ bool CircularBuffer::full() const { //13
 		return bufferSize == bufferCapacity;
 	}
 }
-//Количество свободных ячеек в буфере.
+//ГЉГ®Г«ГЁГ·ГҐГ±ГІГўГ® Г±ГўГ®ГЎГ®Г¤Г­Г»Гµ ГїГ·ГҐГҐГЄ Гў ГЎГіГґГҐГ°ГҐ.
 int CircularBuffer::reserve() const { //14
 	return bufferCapacity - bufferSize;
 }
-//ёмкость буфера
+//ВёГ¬ГЄГ®Г±ГІГј ГЎГіГґГҐГ°Г 
 int CircularBuffer::capacity() const { //15
 	return bufferCapacity;
 }
@@ -160,8 +159,8 @@ void CircularBuffer::set_capacity(int new_capacity) { //16
 	buffer = newBuffer;
 	bufferCapacity = new_capacity;
 }
-//Изменяет размер буфера.
-//В случае расширения, новые элементы заполняются элементом item.
+//Г€Г§Г¬ГҐГ­ГїГҐГІ Г°Г Г§Г¬ГҐГ° ГЎГіГґГҐГ°Г .
+//Г‚ Г±Г«ГіГ·Г ГҐ Г°Г Г±ГёГЁГ°ГҐГ­ГЁГї, Г­Г®ГўГ»ГҐ ГЅГ«ГҐГ¬ГҐГ­ГІГ» Г§Г ГЇГ®Г«Г­ГїГѕГІГ±Гї ГЅГ«ГҐГ¬ГҐГ­ГІГ®Г¬ item.
 void CircularBuffer::resize(int new_size, const value_type& item) { //17
 	if (new_size < 0) {
 		throw std::invalid_argument("Invalid new_size");
@@ -190,7 +189,7 @@ void CircularBuffer::resize(int new_size, const value_type& item) { //17
 		end = new_size - 1;
 	}
 }
-//Оператор присваивания.
+//ГЋГЇГҐГ°Г ГІГ®Г° ГЇГ°ГЁГ±ГўГ ГЁГўГ Г­ГЁГї.
 CircularBuffer& CircularBuffer::operator=(const CircularBuffer& cb) { //18
 	delete[] buffer;
 	bufferSize = cb.bufferSize;
@@ -203,7 +202,7 @@ CircularBuffer& CircularBuffer::operator=(const CircularBuffer& cb) { //18
 	end = cb.end;
 	return *this;
 }
-//Обменивает содержимое буфера с буфером cb.
+//ГЋГЎГ¬ГҐГ­ГЁГўГ ГҐГІ Г±Г®Г¤ГҐГ°Г¦ГЁГ¬Г®ГҐ ГЎГіГґГҐГ°Г  Г± ГЎГіГґГҐГ°Г®Г¬ cb.
 void CircularBuffer::swap(CircularBuffer& cb) { //19
 	if (bufferCapacity != cb.bufferCapacity) {
 		throw std::length_error("Buffers have different capacities");
@@ -222,9 +221,9 @@ void CircularBuffer::swap(CircularBuffer& cb) { //19
 	cb.bufferSize = tempBufferSize;
 }
 
-//Добавляет элемент в конец буфера. 
-//Если текущий размер буфера равен его ёмкости, то переписывается
-//первый элемент буфера (т.е., буфер закольцован). 
+//Г„Г®ГЎГ ГўГ«ГїГҐГІ ГЅГ«ГҐГ¬ГҐГ­ГІ Гў ГЄГ®Г­ГҐГ¶ ГЎГіГґГҐГ°Г . 
+//Г…Г±Г«ГЁ ГІГҐГЄГіГ№ГЁГ© Г°Г Г§Г¬ГҐГ° ГЎГіГґГҐГ°Г  Г°Г ГўГҐГ­ ГҐГЈГ® ВёГ¬ГЄГ®Г±ГІГЁ, ГІГ® ГЇГҐГ°ГҐГЇГЁГ±Г»ГўГ ГҐГІГ±Гї
+//ГЇГҐГ°ГўГ»Г© ГЅГ«ГҐГ¬ГҐГ­ГІ ГЎГіГґГҐГ°Г  (ГІ.ГҐ., ГЎГіГґГҐГ° Г§Г ГЄГ®Г«ГјГ¶Г®ГўГ Г­). 
 void CircularBuffer::push_back(const value_type& item) { //20
 	if (full()) {
 		start = (start + 1) % bufferCapacity; 
@@ -237,8 +236,8 @@ void CircularBuffer::push_back(const value_type& item) { //20
 	bufferSize++;
 }
 
-//Добавляет новый элемент перед первым элементом буфера. 
-//Аналогично push_back, может переписать последний элемент буфера.
+//Г„Г®ГЎГ ГўГ«ГїГҐГІ Г­Г®ГўГ»Г© ГЅГ«ГҐГ¬ГҐГ­ГІ ГЇГҐГ°ГҐГ¤ ГЇГҐГ°ГўГ»Г¬ ГЅГ«ГҐГ¬ГҐГ­ГІГ®Г¬ ГЎГіГґГҐГ°Г . 
+//ГЂГ­Г Г«Г®ГЈГЁГ·Г­Г® push_back, Г¬Г®Г¦ГҐГІ ГЇГҐГ°ГҐГЇГЁГ±Г ГІГј ГЇГ®Г±Г«ГҐГ¤Г­ГЁГ© ГЅГ«ГҐГ¬ГҐГ­ГІ ГЎГіГґГҐГ°Г .
 void CircularBuffer::push_front(const value_type& item) { //21
 	if (full()) {
 		end = (end - 1 + bufferCapacity) % bufferCapacity; 
@@ -251,7 +250,7 @@ void CircularBuffer::push_front(const value_type& item) { //21
 	bufferSize++; 
 }
 
-//удаляет последний элемент буфера.
+//ГіГ¤Г Г«ГїГҐГІ ГЇГ®Г±Г«ГҐГ¤Г­ГЁГ© ГЅГ«ГҐГ¬ГҐГ­ГІ ГЎГіГґГҐГ°Г .
 void CircularBuffer::pop_back() { //22
 	if (empty()) {
 		throw std::out_of_range("Buffer is empty, cannot pop_back");
@@ -266,7 +265,7 @@ void CircularBuffer::pop_back() { //22
 	bufferSize--;
 }
 
-//удаляет первый элемент буфера.
+//ГіГ¤Г Г«ГїГҐГІ ГЇГҐГ°ГўГ»Г© ГЅГ«ГҐГ¬ГҐГ­ГІ ГЎГіГґГҐГ°Г .
 void CircularBuffer::pop_front() { //23
 	if (empty()) {
 		throw std::out_of_range("Buffer is empty, cannot pop_front");
@@ -281,7 +280,7 @@ void CircularBuffer::pop_front() { //23
 	bufferSize--;
 }
 
-//Вставляет элемент item по индексу pos. Ёмкость буфера остается неизменной.
+//Г‚Г±ГІГ ГўГ«ГїГҐГІ ГЅГ«ГҐГ¬ГҐГ­ГІ item ГЇГ® ГЁГ­Г¤ГҐГЄГ±Гі pos. ВЁГ¬ГЄГ®Г±ГІГј ГЎГіГґГҐГ°Г  Г®Г±ГІГ ГҐГІГ±Гї Г­ГҐГЁГ§Г¬ГҐГ­Г­Г®Г©.
 void CircularBuffer::insert(int pos, const value_type& item) { //24
 	if (pos < 0 || pos > bufferSize) {
 		throw std::out_of_range("Invalid index");
@@ -302,7 +301,7 @@ void CircularBuffer::insert(int pos, const value_type& item) { //24
 	bufferSize++; 
 }
 
-//Удаляет элементы из буфера в интервале [first, last).
+//Г“Г¤Г Г«ГїГҐГІ ГЅГ«ГҐГ¬ГҐГ­ГІГ» ГЁГ§ ГЎГіГґГҐГ°Г  Гў ГЁГ­ГІГҐГ°ГўГ Г«ГҐ [first, last).
 void CircularBuffer::erase(int first, int last) { //25
 	if (first < 0 || first >= last || last > bufferSize) {
 		throw std::out_of_range("Invalid range");
@@ -323,7 +322,7 @@ void CircularBuffer::erase(int first, int last) { //25
 	bufferSize -= eraseCount;
 }
 
-//Очищает буфер.
+//ГЋГ·ГЁГ№Г ГҐГІ ГЎГіГґГҐГ°.
 void CircularBuffer::clear() { //26
 	start = 0;
 	end = 0;
@@ -357,7 +356,7 @@ bool operator==(const CircularBuffer& a, const CircularBuffer& b) { //27
 }
 
 
-// Оператор сравнения !=
+// ГЋГЇГҐГ°Г ГІГ®Г° Г±Г°Г ГўГ­ГҐГ­ГЁГї !=
 bool operator!=(const CircularBuffer& a, const CircularBuffer& b) { //28
 	return !(a == b); 
 }
